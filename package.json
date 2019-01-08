@@ -4,6 +4,7 @@
   "description": "chessIO - chess based on Socked.IO",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +22,13 @@
   "bugs": {
     "url": "https://github.com/worldpres/chessIO/issues"
   },
-  "homepage": "https://github.com/worldpres/chessIO#readme"
+  "homepage": "https://github.com/worldpres/chessIO#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ip": "^1.1.5",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
 }
