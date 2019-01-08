@@ -2,9 +2,9 @@ $(() => {
 
     let socket = io();
 
-    socket.on('hello', (name) => {
-        console.log(name);
-        socket.emit('hello', 'Here I am');
+    socket.on('welcome', (name) => {
+        if(localStorage.name) socket.emit('thats my name', localStorage.name);
+        else localStorage.name = name;
     });
 
 });

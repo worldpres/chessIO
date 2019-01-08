@@ -23,16 +23,16 @@ io.on('connection', (socket) => {
         id: socket.id,
         name: `user${new Date().getTime()}`,
     });
-
+    
     socket.on('disconnect', () => {
-        users = users.filter(v => v.id !== socket.id);
+        users = users.filter(v => v.id != socket.id);
     });
     
-    socket.emit('hello', users.find(v => v.id === socket.id).name);
-
-    socket.on('hello', (msg) => {
-        console.log(msg);
+    socket.emit('welcome', users.find(v => v.id == socket.id).name);
+    
+    socket.on('thats my name', (name) => {
+        users.find(v => v.id == socket.id).name = name;
         console.log(users);
     });
-
+    
 });
