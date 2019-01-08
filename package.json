@@ -1,0 +1,25 @@
+{
+  "name": "chessio",
+  "version": "1.0.0",
+  "description": "chessIO - chess based on Socked.IO",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/worldpres/chessIO.git"
+  },
+  "keywords": [
+    "chess",
+    "websocket",
+    "socketio",
+    "nodejs"
+  ],
+  "author": "worldpres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/worldpres/chessIO/issues"
+  },
+  "homepage": "https://github.com/worldpres/chessIO#readme"
+}
