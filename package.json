@@ -15,7 +15,10 @@
     "chess",
     "websocket",
     "socketio",
-    "nodejs"
+    "nodejs",
+    "expressjs",
+    "gulp",
+    "browser-sync",
   ],
   "author": "worldpres",
   "license": "ISC",
