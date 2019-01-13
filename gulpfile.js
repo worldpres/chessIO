@@ -1,34 +1,32 @@
 'use strict';
+
 /**
- * install gulp globally also
+ * Gulp (install globally also)
  */
+
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var nodemon = require('gulp-nodemon');
 
-gulp.task('default', ['browser-sync'], function () {
+gulp.task('nodemon', (callback) => {
+	var started = false;
+	return nodemon({
+		script: 'server.js' // server filename
+	}).on('start', () => {
+		if (!started) {
+			callback();
+			started = true;
+		}
+	});
 });
 
-gulp.task('browser-sync', ['nodemon'], function() {
+gulp.task('browser-sync', gulp.series('nodemon', () => {
 	browserSync.init(null, {
-		proxy: "http://localhost:3000",
-        files: ["public/**/*.*"],
-        browser: "chromium-browser",
-        port: 4000,
+		proxy: "http://localhost:3000", // express.js URL
+		files: ["assets/**/*.*"], // all files to check from assets directory
+		browser: "chromium-browser", // open browser
+		port: 4000, // open port
 	});
-});
-gulp.task('nodemon', function (cb) {
-	
-	var started = false;
-	
-	return nodemon({
-		script: 'app.js'
-	}).on('start', function () {
-		// to avoid nodemon being started multiple times
-		// thanks @matthisk
-		if (!started) {
-			cb();
-			started = true; 
-		} 
-	});
-});
+}));
+
+gulp.task('default', gulp.parallel('browser-sync', () => {}));

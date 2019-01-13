@@ -1,4 +1,5 @@
 'use strict';
+
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -16,9 +17,15 @@ app.get('/', (req, res) => {
     res.sendFile(`index.html`);
 });
 
+// app.use(express.static('assets'));
+// app.get('/', function (req, res) {
+//     res.sendfile('./assets/index.html');
+// });
+
 /**
  * SOCKET.IO
  */
+
 let users = [];
 
 io.on('connection', (socket) => {
@@ -27,16 +34,16 @@ io.on('connection', (socket) => {
         id: socket.id,
         name: `user${new Date().getTime()}`,
     });
-    
+
     socket.on('disconnect', () => {
         users = users.filter(v => v.id != socket.id);
     });
-    
+
     socket.emit('welcome', users.find(v => v.id == socket.id).name);
-    
+
     socket.on('thats my name', (name) => {
         users.find(v => v.id == socket.id).name = name;
         console.log(users);
     });
-    
+
 });
