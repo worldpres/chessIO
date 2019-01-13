@@ -29,6 +29,9 @@
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0",
+    "gulp-nodemon": "^2.4.2",
     "nodemon": "^1.18.9"
   }
 }

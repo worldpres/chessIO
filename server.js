@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -15,6 +16,9 @@ app.get('/', (req, res) => {
     res.sendFile(`index.html`);
 });
 
+/**
+ * SOCKET.IO
+ */
 let users = [];
 
 io.on('connection', (socket) => {
