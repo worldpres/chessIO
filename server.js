@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 const io = require('socket.io')(http);
 
 http.listen(port, () => {
-    console.log(`listening on ${ip.address()}:${port}`);
+    console.log(`[NodeJS] listening on ${ip.address()}:${port}`);
 });
 
 app.use(express.static(__dirname + '/assets'));
@@ -16,11 +16,6 @@ app.use(express.static(__dirname + '/assets'));
 app.get('/', (req, res) => {
     res.sendFile(`index.html`);
 });
-
-// app.use(express.static('assets'));
-// app.get('/', function (req, res) {
-//     res.sendfile('./assets/index.html');
-// });
 
 /**
  * SOCKET.IO
