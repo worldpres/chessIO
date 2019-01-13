@@ -37,8 +37,10 @@ gulp.task('nodemon', (callback) => {
 gulp.task('browser-sync', gulp.parallel('nodemon', () => {
 	browserSync.init(null, {
 		proxy: 'http://localhost:3000', // express.js URL
+		ws: true,
 		files: ['assets/**/*.*'], // all files to check from assets directory
-		browser: 'chromium-browser', // open browser
+		// browser: 'chromium-browser', // open browser
+		browser: 'firefox', // open browser
 		port: 4000, // open port
 	});
 }));
