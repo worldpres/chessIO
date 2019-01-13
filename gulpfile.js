@@ -4,12 +4,26 @@
  * Gulp (install globally also)
  */
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var nodemon = require('gulp-nodemon');
+let gulp = require('gulp');
+let browserSync = require('browser-sync');
+let nodemon = require('gulp-nodemon');
+let sass = require('gulp-sass');
+
+let cfg = {
+	scssin: 'assets/scss/**/*.scss',
+	scssout: 'assets/css/',
+}
+
+gulp.task('sass', () => {
+	return gulp.src(cfg.scssin)
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest(cfg.scssout));
+});
+
+gulp.watch(cfg.scssin, gulp.parallel('sass'));
 
 gulp.task('nodemon', (callback) => {
-	var started = false;
+	let started = false;
 	return nodemon({
 		script: 'server.js' // server filename
 	}).on('start', () => {
@@ -28,5 +42,6 @@ gulp.task('browser-sync', gulp.parallel('nodemon', () => {
 		port: 4000, // open port
 	});
 }));
+
 
 gulp.task('default', gulp.parallel('browser-sync'));
