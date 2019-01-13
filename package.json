@@ -18,7 +18,7 @@
     "nodejs",
     "expressjs",
     "gulp",
-    "browser-sync",
+    "browser-sync"
   ],
   "author": "worldpres",
   "license": "ISC",
