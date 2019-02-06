@@ -31,6 +31,7 @@ io.on('connection', (socket) => {
     users.push({
         id: socket.id,
         name: `user${new Date().getTime()}`,
+        status: ``,
     });
 
     socket.on('disconnect', () => {
@@ -41,7 +42,19 @@ io.on('connection', (socket) => {
 
     socket.on('thats my name', (name) => {
         users.find(v => v.id == socket.id).name = name;
-        console.log(users);
+    });
+
+    socket.on('want to play', () => {
+        users.find(v => v.id == socket.id).status = `waiting`;
+        let waitingUsers = users.filter(v => v.status == `waiting` && v.id != socket.id);
+        console.info(waitingUsers);
+        if (waitingUsers.length) {
+            let opponent = waitingUsers.shift();
+            socket.emit('want to play', opponent.name);
+            io.to(opponent.id).emit('want to play', users.find(v => v.id == socket.id).name);
+        } else {
+            socket.emit('want to play', false);
+        }
     });
 
 });
