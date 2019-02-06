@@ -54,11 +54,11 @@ io.on('connection', (socket) => {
             io.to(opponent.id).emit('want to play', users.find(v => v.id == socket.id).name);
             Object.assign(users.find(v => v.id == socket.id), {
                 status: `playing`,
-                vs: opponent.id
+                vs: opponent.name
             });
             Object.assign(users.find(v => v.id == opponent.id), {
                 status: `playing`,
-                vs: socket.id
+                vs: users.find(v => v.id == socket.id).name
             });
         } else {
             socket.emit('want to play', false);
