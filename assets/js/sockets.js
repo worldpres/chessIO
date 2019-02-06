@@ -21,8 +21,6 @@ $(() => {
             waiting = setTimeout(() => {
                 socket.emit('want to play');
             }, 5000);
-            console.log(waiting);
-
         }
     });
 });
