@@ -17,6 +17,9 @@ app.get('/', (req, res) => {
     res.sendFile(`index.html`);
 });
 
+const lib = require('./lib');
+console.log(lib.fun());
+
 /**
  * SOCKET.IO
  */
