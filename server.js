@@ -18,7 +18,6 @@ app.get('/', (req, res) => {
 });
 
 const lib = require('./lib');
-console.log(lib.fun());
 
 /**
  * SOCKET.IO
@@ -43,6 +42,12 @@ io.on('connection', (socket) => {
 
     socket.on('thats my name', (name) => {
         users.find(v => v.id == socket.id).name = name;
+        let player = users.find(v => v.id == socket.id);
+        let opponent = users.find(v => v.vs == player.name);
+        if (opponent) {
+            lib.pair2players(users.find(v => v.id == socket.id), opponent.name);
+            socket.emit('want to play', opponent.name);
+        }
     });
 
     socket.on('want to play', () => {
@@ -52,14 +57,8 @@ io.on('connection', (socket) => {
             let opponent = waitingUsers.shift();
             socket.emit('want to play', opponent.name);
             io.to(opponent.id).emit('want to play', users.find(v => v.id == socket.id).name);
-            Object.assign(users.find(v => v.id == socket.id), {
-                status: `playing`,
-                vs: opponent.name
-            });
-            Object.assign(users.find(v => v.id == opponent.id), {
-                status: `playing`,
-                vs: users.find(v => v.id == socket.id).name
-            });
+            lib.pair2players(users.find(v => v.id == socket.id), opponent.name);
+            lib.pair2players(users.find(v => v.id == opponent.id), users.find(v => v.id == socket.id).name);
         } else {
             socket.emit('want to play', false);
         }

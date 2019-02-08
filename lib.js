@@ -1,7 +1,10 @@
-function fun() {
-    return `Very funny`;
+function pair2players(playerObject, opponentName) {
+    Object.assign(playerObject, {
+        status: `playing`,
+        vs: opponentName
+    });
 }
 
 module.exports = {
-    fun: fun,
+    pair2players: pair2players,
 }

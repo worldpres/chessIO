@@ -8,11 +8,11 @@ $(() => {
     });
 
     $('#play').click(() => {
-        $('#play').hide();
         socket.emit('want to play');
     });
 
     socket.on('want to play', (opponent) => {
+        $('#play').hide();
         if (opponent) {
             if (typeof(waiting) == `number`) clearTimeout(waiting);
             $('#info').text(`Your opponent: ${opponent}`);
