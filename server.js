@@ -62,7 +62,8 @@ io.on('connection', (socket) => {
         let opponent = users.find(v => v.vs == player.name);
         if (opponent) {
             lib.pair2players(users.find(v => v.id == socket.id), opponent.name);
-            socket.emit('want to play', opponent.name);
+            users.find(v => v.id == socket.id).pieces = opponent.pieces;
+            socket.emit('want to play', opponent.name, users.find(v => v.id == socket.id).pieces);
         }
     });
 
@@ -71,10 +72,10 @@ io.on('connection', (socket) => {
         let waitingUsers = users.filter(v => v.status == `waiting` && v.id != socket.id);
         if (waitingUsers.length) {
             let opponent = waitingUsers.shift();
-            socket.emit('want to play', opponent.name);
-            io.to(opponent.id).emit('want to play', users.find(v => v.id == socket.id).name);
-            lib.pair2players(users.find(v => v.id == socket.id), opponent.name);
-            lib.pair2players(users.find(v => v.id == opponent.id), users.find(v => v.id == socket.id).name);
+            lib.pair2players(users.find(v => v.id == socket.id), opponent.name, true);
+            lib.pair2players(users.find(v => v.id == opponent.id), users.find(v => v.id == socket.id).name, true);
+            socket.emit('want to play', opponent.name, users.find(v => v.id == socket.id).pieces);
+            io.to(opponent.id).emit('want to play', users.find(v => v.id == socket.id).name, opponent.pieces);
         } else {
             socket.emit('want to play', false);
         }

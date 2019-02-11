@@ -11,7 +11,43 @@ $(() => {
         socket.emit('want to play');
     });
 
-    socket.on('want to play', (opponent) => {
+    let figures = {
+        wKing: `&#9812;`,
+        bKing: `&#9818;`,
+        wQueen: `&#9813;`,
+        bQueen: `&#9819;`,
+        wRooks: `&#9814;`,
+        bRooks: `&#9820;`,
+        wBishop: `&#9815;`,
+        bBishop: `&#9821;`,
+        wKnight: `&#9816;`,
+        bKnight: `&#9822;`,
+        wPawns: `&#9817;`,
+        bPawns: `&#9823;`
+    }
+
+    fieldDraw = (pieces) => {
+        if (pieces) {
+            for (let i = 8; i > 0; i--) {
+                for (let j = 8; j > 0; j--) {
+                    if ((i + j) % 2) $('#field').append('<div class="piece" id="' + j + '' + i + '"></div>');
+                    else $('#field').append('<div class="piece white" id="' + j + '' + i + '"></div>');
+                }
+            }
+            for (let piece in pieces) {
+                if (typeof (pieces[piece]) == 'string') {
+                    $('#field').find(`#${pieces[piece]}`).html(`<span class="${piece}">${figures[piece]}</span>`);
+                }
+                if (typeof (pieces[piece]) == 'object') {
+                    for (let v of pieces[piece]) {
+                        $('#field').find(`#${v}`).html(`<span class="${piece}">${figures[piece]}</span>`);
+                    }
+                }
+            }
+        }
+    }
+
+    socket.on('want to play', (opponent, pieces) => {
         $('#play').hide();
         if (opponent) {
             if (typeof (waiting) == `number`) clearTimeout(waiting);
@@ -22,6 +58,7 @@ $(() => {
                 socket.emit('want to play');
             }, 5000);
         }
+        fieldDraw(pieces);
     });
 
     socket.on('player left', () => {

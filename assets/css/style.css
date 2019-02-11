@@ -5,4 +5,32 @@
 
 body {
   background-color: #272822;
-  color: #E6C450; }
+  color: #E6C450;
+  padding: 20px; }
+  body #info {
+    margin: 20px 0px; }
+  body #field {
+    width: 400px;
+    margin: 20px 0px;
+    display: inline-block; }
+    body #field::after {
+      content: "";
+      display: block;
+      clear: both; }
+    body #field .piece {
+      width: 50px;
+      height: 50px;
+      background-color: #999;
+      float: left;
+      text-align: center; }
+      body #field .piece.white {
+        background-color: #fff; }
+      body #field .piece span {
+        color: #000;
+        font-size: 30px;
+        line-height: 40px;
+        display: inline-block;
+        width: 100%;
+        height: 50px;
+        padding: 5px 0px;
+        cursor: pointer; }
