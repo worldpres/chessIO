@@ -14,7 +14,7 @@ $(() => {
     socket.on('want to play', (opponent) => {
         $('#play').hide();
         if (opponent) {
-            if (typeof(waiting) == `number`) clearTimeout(waiting);
+            if (typeof (waiting) == `number`) clearTimeout(waiting);
             $('#info').text(`Your opponent: ${opponent}`);
         } else {
             $('#info').text(`Waiting for opponent...`);
@@ -23,4 +23,16 @@ $(() => {
             }, 5000);
         }
     });
+
+    socket.on('player left', () => {
+        $('#info').text(`You opponent left, but we can wait for him about 5 seconds.`);
+    });
+    socket.on('player came back', (opponent) => {
+        $('#info').text(`Your opponent ${opponent} came back.`);
+    });
+    socket.on('player gone', () => {
+        $('#info').text(`You opponent gone. You can play with other players.`);
+        $('#play').show();
+    });
+
 });

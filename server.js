@@ -35,6 +35,22 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
+        let player = users.find(v => v.id == socket.id);
+        let opponent = users.find(v => v.vs == player.name);
+        if (opponent) {
+            io.to(opponent.id).emit('player left');
+            setTimeout(() => {
+                if (users.find(v => v.name == player.name)) {
+                    io.to(opponent.id).emit('player came back', player.name);
+                } else {
+                    io.to(opponent.id).emit('player gone');
+                    Object.assign(users.find(v => v.id == opponent.id), {
+                        status: ``,
+                        vs: ``
+                    });
+                }
+            }, 5000);
+        }
         users = users.filter(v => v.id != socket.id);
     });
 
