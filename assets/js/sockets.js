@@ -28,10 +28,11 @@ $(() => {
 
     fieldDraw = (pieces) => {
         if (pieces) {
+            $('#field').empty();
             for (let i = 8; i > 0; i--) {
                 for (let j = 8; j > 0; j--) {
-                    if ((i + j) % 2) $('#field').append('<div class="piece" id="' + j + '' + i + '"></div>');
-                    else $('#field').append('<div class="piece white" id="' + j + '' + i + '"></div>');
+                    if ((i + j) % 2) $('#field').append('<div id="' + j + '' + i + '"></div>');
+                    else $('#field').append('<div class="white" id="' + j + '' + i + '"></div>');
                 }
             }
             for (let piece in pieces) {
@@ -44,6 +45,23 @@ $(() => {
                     }
                 }
             }
+            let piece = ``;
+            let from = ``;
+            let to = ``;
+            $('#field div').click((event) => {
+                let parentId = $(event.target).parent().attr('id');
+                if (/^[1-8]{1}[1-8]{1}$/.test(parentId)) {
+                    $('#field').find(`div#${parentId}`).addClass('active').siblings().removeClass('active');
+                    piece = $(event.target).attr('class');
+                    from = parentId;
+                    to = ``;
+                } else {
+                    to = $(event.target).attr('id');
+                }
+                if (piece && from && to) {
+                    socket.emit('my move', piece, from, to);
+                }
+            });
         }
     }
 
@@ -58,6 +76,10 @@ $(() => {
                 socket.emit('want to play');
             }, 5000);
         }
+        fieldDraw(pieces);
+    });
+
+    socket.on('move', (pieces) => {
         fieldDraw(pieces);
     });
 

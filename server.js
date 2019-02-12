@@ -81,4 +81,24 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('my move', (piece, from, to) => {
+        let data = users.find(v => v.id == socket.id).pieces[piece];
+        if (typeof (data) == `string`) {
+            if (data == from) users.find(v => v.id == socket.id).pieces[piece] = to;
+        }
+        if (typeof (data) == `object`) {
+            users.find(v => v.id == socket.id).pieces[piece] = data.map((v) => (v == from) ? to : v);
+        }
+
+        console.log(piece, from, to);
+
+        let player = users.find(v => v.id == socket.id);
+        users.find(v => v.vs == player.name).pieces = player.pieces;
+
+        let opponent = users.find(v => v.vs == player.name);
+        socket.emit('move', player.pieces);
+        io.to(opponent.id).emit('move', opponent.pieces);
+    });
+
+
 });

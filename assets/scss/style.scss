@@ -24,15 +24,20 @@ body {
             clear: both;
         }
 
-        .piece {
+        div {
             width: 50px;
             height: 50px;
             background-color: #999;
             float: left;
             text-align: center;
+            border: 2px solid transparent;
 
             &.white {
                 background-color: #fff;
+            }
+
+            &.active{
+                border: 2px solid #bada55;
             }
 
             span {
