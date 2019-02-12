@@ -5,8 +5,13 @@
 }
 
 body {
-    background-color: #272822;
-    color: #E6C450;
+    background-color: #fff;
+    background-image: url('../img/bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #444;
     padding: 20px;
 
     #info {
